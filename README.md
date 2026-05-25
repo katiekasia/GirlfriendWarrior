@@ -29,6 +29,9 @@ Here is a list of the games I have built so far. Click the button below to read 
 ### Game hosted online
 My game:  https://katiekasia.github.io/GameDevGame/
 
+### Game on youtube
+Youtube video: https://youtu.be/1hCNlLJfiak
+
 ### Sources/Assets/Tutorials
 https://www.youtube.com/watch?v=HAVp6Z8b4xA
 https://pixel-boy.itch.io/ninja-adventure-asset-pack
