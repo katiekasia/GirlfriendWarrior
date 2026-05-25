@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7928875044895645876}
   - component: {fileID: 1686324879936424286}
   - component: {fileID: 1297720395689970791}
+  - component: {fileID: -2602357960079723519}
   m_Layer: 7
   m_Name: AIHelper
   m_TagString: Helper
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8512354210672794683}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.51987, y: 3.82076, z: 0}
+  m_LocalPosition: {x: -21.31, y: 3.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -179,11 +180,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461b8e598f59e2740a2043eb9f5ab151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIHelper
-  health: 15
-  movementSpeed: 3
-  attackDamage: 4
+  movementSpeed: 2.5
+  attackDamage: 3
   attackRate: 1.5
-  searchRadius: 15
-  wanderRadius: 5
-  minWanderWait: 1.5
+  searchRadius: 7
+  strikeDistance: 1
+  wanderRadius: 3
+  minWanderWait: 2
   maxWanderWait: 4
+--- !u!95 &-2602357960079723519
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8512354210672794683}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 354c16e0c3c602b47be8d1d132077ee1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

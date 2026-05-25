@@ -8,7 +8,6 @@ public class GameDirector : MonoBehaviour
     [Tooltip("Total prep phase time in seconds (5 minutes = 300 seconds)")]
     public float prepTimeDuration = 300f;
 
-    // CHANGED: Fixed strictly to 1 wave of monsters for the entire game session
     private const int TOTAL_WAVES = 1;
 
     [Header("UI Text Overlays")]
@@ -19,21 +18,34 @@ public class GameDirector : MonoBehaviour
     [Tooltip("Drag the GameObject container that handles spawning enemies here")]
     public GameObject monsterSpawner;
 
-    // Global authorization switches checked by player triggers
+    [Header("Audio Configuration")]
+    [Tooltip("Drag an AudioSource here configured with your peaceful prep music track")]
+    public AudioSource prepMusicSource;
+    [Tooltip("Drag an AudioSource here configured with your loopable combat music track")]
+    public AudioSource waveMusicSource;
+
     public bool canUpgrade { get; private set; } = true;
 
     private float timeRemaining;
     private Coroutine activeStatusOverrideCoroutine;
     private bool areWavesRunning = false;
+    private bool isMatchOver = false;
 
     void Start()
     {
         timeRemaining = prepTimeDuration;
         canUpgrade = true;
         areWavesRunning = false;
+        isMatchOver = false;
 
         if (monsterSpawner != null)
             monsterSpawner.SetActive(false);
+
+        // FIXED: Instantly start playing the peaceful prep phase music on match startup!
+        if (prepMusicSource != null)
+        {
+            prepMusicSource.Play();
+        }
 
         StartCoroutine(MasterMatchSequence());
     }
@@ -46,25 +58,36 @@ public class GameDirector : MonoBehaviour
 
         while (timeRemaining > 0)
         {
+            if (isMatchOver) yield break;
+
             timeRemaining -= Time.deltaTime;
             UpdateClockHUD(timeRemaining);
             yield return null;
         }
 
-        // 2. LOCK DOWN ALL TRADING BOOTHS
-        canUpgrade = false;
+        if (isMatchOver) yield break;
+
+        // FIXED: The clock hit zero! Cut off the peaceful prep music cleanly right now.
+        if (prepMusicSource != null)
+        {
+            prepMusicSource.Stop();
+        }
+
+        // 2. INITIATE SIEGE PHASE
         areWavesRunning = true;
 
         if (activeStatusOverrideCoroutine != null) StopCoroutine(activeStatusOverrideCoroutine);
         if (timerTextUI != null) timerTextUI.text = "00:00";
-        Debug.Log("Time ran out! Shop booths and defense adjustments are locked down.");
+        Debug.Log("Clock hit zero! Octopuses are attacking, but trading remains OPEN!");
 
         // 3. SINGLE ENEMY ATTACK WAVE SEQUENCE
-        // FIXED: Loops exactly 1 single time, dropping the breathing space delays between waves entirely
         yield return StartCoroutine(ExecuteCombatWave(1));
 
         // 4. MATCH VICTORY
-        TriggerVictory();
+        if (!isMatchOver)
+        {
+            TriggerVictory();
+        }
     }
 
     IEnumerator ClearInitialStatusAfterDelay(float delay)
@@ -78,7 +101,7 @@ public class GameDirector : MonoBehaviour
 
     public void DisplayTemporaryStatus(string message)
     {
-        if (areWavesRunning) return;
+        if (isMatchOver) return;
 
         if (activeStatusOverrideCoroutine != null)
         {
@@ -102,18 +125,45 @@ public class GameDirector : MonoBehaviour
 
     IEnumerator ExecuteCombatWave(int waveNum)
     {
+        if (isMatchOver) yield break;
+
         if (statusTextUI != null) statusTextUI.text = "MONSTERS INCOMING!";
         if (monsterSpawner != null) monsterSpawner.SetActive(true);
 
-        // Continuous wave combat simulation (e.g., 60 seconds)
-        float waveTimer = 60f;
-        while (waveTimer > 0)
+        // Start playing the monster wave background music clip
+        if (waveMusicSource != null)
         {
-            waveTimer -= Time.deltaTime;
+            waveMusicSource.Play();
+        }
+
+        float spawnDurationLimit = 15f;
+        while (spawnDurationLimit > 0)
+        {
+            if (isMatchOver) yield break;
+            spawnDurationLimit -= Time.deltaTime;
             yield return null;
         }
 
         if (monsterSpawner != null) monsterSpawner.SetActive(false);
+
+        if (statusTextUI != null) statusTextUI.text = "ELIMINATE THE REMAINING OCTOPUSES!";
+
+        bool elementsRemaining = true;
+        while (elementsRemaining)
+        {
+            if (isMatchOver) yield break;
+
+            GameObject remainingMonster = GameObject.FindWithTag("Monster");
+
+            if (remainingMonster == null)
+            {
+                elementsRemaining = false;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
 
     void UpdateClockHUD(float currentSecondsValue)
@@ -131,15 +181,50 @@ public class GameDirector : MonoBehaviour
 
     public void TriggerGameOver()
     {
+        if (isMatchOver) return;
+        isMatchOver = true;
+
         StopAllCoroutines();
+
         if (statusTextUI != null) statusTextUI.text = "THE FORTRESS HAS FALLEN! GAME OVER";
         if (monsterSpawner != null) monsterSpawner.SetActive(false);
-        Time.timeScale = 0f;
+
+        // Safety Catch: Stop BOTH tracks if a game over hits unexpectedly
+        if (prepMusicSource != null) prepMusicSource.Stop();
+        if (waveMusicSource != null) waveMusicSource.Stop();
+
+        GameOverController gameOver = Object.FindFirstObjectByType<GameOverController>();
+        if (gameOver != null)
+        {
+            gameOver.TriggerMatchLoss();
+        }
+        else
+        {
+            Debug.LogError("Director Error: GameOverController component missing from active scene hierarchy!");
+        }
     }
 
     void TriggerVictory()
     {
+        if (isMatchOver) return;
+        isMatchOver = true;
+
+        StopAllCoroutines();
+
         if (statusTextUI != null) statusTextUI.text = "FORTRESS SURVIVED! VICTORY!";
-        Time.timeScale = 0f;
+
+        // Safety Catch: Stop BOTH tracks on victory state updates
+        if (prepMusicSource != null) prepMusicSource.Stop();
+        if (waveMusicSource != null) waveMusicSource.Stop();
+
+        GameOverController gameOver = Object.FindFirstObjectByType<GameOverController>();
+        if (gameOver != null)
+        {
+            gameOver.TriggerMatchWin();
+        }
+        else
+        {
+            Debug.LogError("Director Error: GameOverController component missing from active scene hierarchy!");
+        }
     }
 }

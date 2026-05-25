@@ -23,6 +23,14 @@ public class PlayerInventory : MonoBehaviour
     [Header("Visual Effects")]
     public GameObject upgradeFXPrefab;
 
+    [Header("Audio Configurations")]
+    [Tooltip("Sound played when successfully upgrading or repairing the wall")]
+    public AudioSource wallUpgradeSFX;
+    [Tooltip("Sound played when exchanging flowers for meat")]
+    public AudioSource buyMeatSFX;
+    [Tooltip("Sound played when hiring a helper warrior")]
+    public AudioSource hireWarriorSFX;
+
     private GameDirector directorScript;
     private GameObject activeFXInstance;
 
@@ -43,23 +51,19 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
-        // 2. GLOBAL MATCH TIMEOUT TRIGGER
-        if (directorScript != null && !directorScript.canUpgrade)
-        {
-            Debug.Log("Shops are closed! Cannot trade resources after countdown ends.");
-            return;
-        }
-
         WallManager wallManager = Object.FindFirstObjectByType<WallManager>();
 
-        // BOOTH 1: Wall Upgrade Zone
+        // BOOTH 1: Wall Upgrade / Repair Zone
         if (collision.CompareTag("WallUpgradeZone"))
         {
             if (wallManager != null)
             {
-                if (wallManager.currentLevel >= 5)
+                WallHealthManager wallHealth = wallManager.GetComponent<WallHealthManager>();
+                bool isDamaged = wallHealth != null && wallHealth.currentHealthPoints < wallHealth.maxHealthPoints;
+
+                if (wallManager.currentLevel >= 5 && !isDamaged)
                 {
-                    if (directorScript != null) directorScript.DisplayTemporaryStatus("Wall Maxed: Cannot Trade Flowers!");
+                    if (directorScript != null) directorScript.DisplayTemporaryStatus("Wall Maxed & Fully Healed!");
                     return;
                 }
 
@@ -72,24 +76,46 @@ public class PlayerInventory : MonoBehaviour
 
                     flowerCount -= 5;
                     UpdateUI();
-                    wallManager.UpgradeToNextLevel();
 
-                    if (directorScript != null)
+                    // FIXED: Play the wall upgrade sound effect instantly!
+                    if (wallUpgradeSFX != null)
                     {
-                        directorScript.DisplayTemporaryStatus("5 Flowers exchanged for better wall defence!");
+                        wallUpgradeSFX.Play();
+                    }
+
+                    if (isDamaged)
+                    {
+                        if (wallHealthScript != null)
+                        {
+                            wallHealthScript.BuyWallUpgrade();
+                        }
+
+                        if (directorScript != null)
+                        {
+                            directorScript.DisplayTemporaryStatus("5 Flowers exchanged to REPAIR the structural damage!");
+                        }
+                    }
+                    else
+                    {
+                        wallManager.UpgradeToNextLevel();
+
+                        if (directorScript != null)
+                        {
+                            directorScript.DisplayTemporaryStatus("5 Flowers exchanged for better wall defence!");
+                        }
                     }
                 }
                 else
                 {
                     if (directorScript != null)
                     {
-                        directorScript.DisplayTemporaryStatus("Need 5 Flowers to upgrade wall!");
+                        directorScript.DisplayTemporaryStatus("Need 5 Flowers to upgrade or repair wall!");
                     }
                 }
             }
         }
 
-        // BOOTH 2: Flower To Meat Zone (FIXED: Allows infinite meat buying!)
+        // BOOTH 2: Flower To Meat Zone
         if (collision.CompareTag("FlowerToMeatZone"))
         {
             if (flowerCount >= 8)
@@ -97,6 +123,12 @@ public class PlayerInventory : MonoBehaviour
                 flowerCount -= 8;
                 meatCount += 1;
                 UpdateUI();
+
+                // FIXED: Play the meat purchase sound effect instantly!
+                if (buyMeatSFX != null)
+                {
+                    buyMeatSFX.Play();
+                }
 
                 if (directorScript != null)
                 {
@@ -112,7 +144,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
 
-        // BOOTH 3: Meat To Helpers Zone (UPDATED: Uses your new spawn marker position!)
+        // BOOTH 3: Meat To Helpers Zone
         if (collision.CompareTag("MeatToHelpersZone"))
         {
             if (meatCount >= 4)
@@ -121,12 +153,16 @@ public class PlayerInventory : MonoBehaviour
                 warriorCount += 1;
                 UpdateUI();
 
+                // FIXED: Play the warrior hiring sound effect instantly!
+                if (hireWarriorSFX != null)
+                {
+                    hireWarriorSFX.Play();
+                }
+
                 if (helperWarriorPrefab != null)
                 {
-                    // Default fallback position right above the booth trigger box
                     Vector3 spawnPos = collision.transform.position + new Vector3(0f, 1f, 0f);
 
-                    // If you assigned your custom gate marker, spawn them there instead!
                     if (helperSpawnMarker != null)
                     {
                         spawnPos = helperSpawnMarker.position;

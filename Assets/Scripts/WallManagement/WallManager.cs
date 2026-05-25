@@ -12,23 +12,29 @@ public class WallManager : MonoBehaviour
     [HideInInspector] public int currentLevel = 0;
 
     private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCollider;
     private WallHealthManager healthManager;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
         healthManager = GetComponent<WallHealthManager>();
 
-        // Level 0: Hide the wall sprite renderer completely on game start
+        // Level 0: Completely disable the sprite and collider so you can walk over it freely!
         if (spriteRenderer != null)
         {
             spriteRenderer.enabled = false;
+        }
+
+        if (boxCollider != null)
+        {
+            boxCollider.enabled = false;
         }
     }
 
     public void UpgradeToNextLevel()
     {
-        // Don't allow upgrades past the 5th level cap
         if (currentLevel >= 5)
         {
             Debug.Log("Maximum wall level reached!");
@@ -39,10 +45,8 @@ public class WallManager : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            // Ensure the renderer turns on once we hit Level 1
             spriteRenderer.enabled = true;
 
-            // Explicitly assign your custom slots based on the current level
             switch (currentLevel)
             {
                 case 1:
@@ -63,15 +67,18 @@ public class WallManager : MonoBehaviour
             }
         }
 
-        // Syncs up the health bar UI row of hearts perfectly
+        // FIXED: Turn on the solid physical box collider now that the wall is built!
+        if (boxCollider != null)
+        {
+            boxCollider.enabled = true;
+        }
+
         SyncSystemHealth();
     }
 
     public void SyncSystemHealth()
     {
         if (healthManager == null) return;
-
-        // Triggers the health calculations inside WallHealthManager safely
         healthManager.BuyWallUpgrade();
     }
 }
