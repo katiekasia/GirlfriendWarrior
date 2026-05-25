@@ -31,7 +31,4 @@ I quickly learned that I needed to be extremely detail-oriented here. I had to g
  <img width="541" height="293" alt="image" src="https://github.com/user-attachments/assets/835e476b-9342-46e6-8833-9b7d058e06db" />
 </p>
 
----
 
-### Summary
-Even though managing the layers required a lot of patience, seeing my character walk around a beautifully designed world with a smart tracking camera makes all the hard work worth it! Now that the map framework is solid, I am ready to start building the trading options for Milestone 2.
