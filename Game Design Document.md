@@ -9,7 +9,8 @@ Target Platform: VIA Arcade Cabinet (Joystick \+ Face Buttons) & PC Computer (Ke
 * **Project Scope:** Made specifically for an arcade cabinet. There are no save files, no setting menus, and no mouse menus. Everything is kept simple so players can start playing immediately.
 
 <img width="297" height="52" alt="image" src="https://github.com/user-attachments/assets/8e1ba0ec-6015-44c6-bcce-4428fb3c9715" />
-*Figure 1: Playable character \- Girlfriend Warrior*
+** Playable character \- Girlfriend Warrior**
+
 
 * **The Story:** The story is silly and fun. The Octopus King thinks your boyfriend is super cute and wants him for himself\! He has sent his whole sea-monster army to kidnap him.  
 * **The Mission:** Your boyfriend is hiding behind an unbuilt fortress wall. Playing as the brave Girlfriend, you must quickly collect resources, build up a safe wall, and hire automated warriors to help protect him before time runs out.  
