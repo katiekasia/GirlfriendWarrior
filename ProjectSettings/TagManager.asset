@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Flower
+  - FortressWall
+  - FlowerToMeatZone
+  - MeatToHelpersZone
+  - WallUpgradeZone
+  - Monster
+  - Helper
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - Wall
+  - Helper
+  - Monster
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 1256869013
+    locked: 0
+  - name: WalkInFront
+    uniqueID: 2224650331
+    locked: 0
+  - name: Collision
+    uniqueID: 494199179
+    locked: 0
+  - name: Player
+    uniqueID: 3544031443
+    locked: 0
+  - name: WalkBehind
+    uniqueID: 1765485949
+    locked: 0
+  - name: Decorations
+    uniqueID: 723264673
+    locked: 0
+  - name: Helper
+    uniqueID: 3328442491
+    locked: 0
+  - name: Monster
+    uniqueID: 533557779
+    locked: 0
+  m_RenderingLayers:
+  - Default
