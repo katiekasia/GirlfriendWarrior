@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem; // REQUIRED FOR NEW INPUT SYSTEM CAPABILITIES
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class GameOverController : MonoBehaviour
@@ -27,13 +27,10 @@ public class GameOverController : MonoBehaviour
 
     void Update()
     {
-        // Don't allow pausing if the match is officially over!
         if (forceMatchLock) return;
 
-        // FIXED CRITIQUE: Rewritten using modern New Input System formatting
         bool pauseButtonPressedThisFrame = false;
 
-        // 1. Check Keyboard Input (Tab key or Escape key)
         if (Keyboard.current != null)
         {
             if (Keyboard.current.tabKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -42,17 +39,14 @@ public class GameOverController : MonoBehaviour
             }
         }
 
-        // 2. Check Arcade Machine/Gamepad Input (Menu / Start Button)
         if (Gamepad.current != null)
         {
-            // Start button on controllers automatically maps to the machine's Start button layout
             if (Gamepad.current.startButton.wasPressedThisFrame)
             {
                 pauseButtonPressedThisFrame = true;
             }
         }
 
-        // Trigger the pause menu toggle cleanly if any matching input was detected
         if (pauseButtonPressedThisFrame)
         {
             TogglePauseMenu();
@@ -67,7 +61,6 @@ public class GameOverController : MonoBehaviour
         {
             if (gameOverPanel != null) gameOverPanel.SetActive(true);
 
-            // Set your custom pause title!
             if (statusText != null)
             {
                 statusText.text = "Girlfriend Warrior";

@@ -21,7 +21,7 @@ public class WallManager : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         healthManager = GetComponent<WallHealthManager>();
 
-        // Level 0: Completely disable the sprite and collider so you can walk over it freely!
+
         if (spriteRenderer != null)
         {
             spriteRenderer.enabled = false;
@@ -67,7 +67,6 @@ public class WallManager : MonoBehaviour
             }
         }
 
-        // FIXED: Turn on the solid physical box collider now that the wall is built!
         if (boxCollider != null)
         {
             boxCollider.enabled = true;

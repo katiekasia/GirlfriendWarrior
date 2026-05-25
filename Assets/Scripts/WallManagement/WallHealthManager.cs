@@ -47,8 +47,6 @@ public class WallHealthManager : MonoBehaviour
 
     public void InflictDamage(int damageValue)
     {
-        // FIXED CRITIQUE: If the wall level is 0, the defense line doesn't exist!
-        // If a monster touches the boundary line at level 0, bypass safety loops and trigger Defeat.
         if (wallUpgradeLevel <= 0)
         {
             TriggerMatchLossSequence();
@@ -72,17 +70,17 @@ public class WallHealthManager : MonoBehaviour
 
     private void TriggerMatchLossSequence()
     {
-        // FIXED: Connects directly to your GameDirector to stop the match clock and display loss UI
+
         GameDirector director = Object.FindFirstObjectByType<GameDirector>();
 
         if (director != null)
         {
             Debug.Log("Wall reached 0 HP! Telling GameDirector to end the match.");
-            director.TriggerGameOver(); // Calls your existing game over sequence
+            director.TriggerGameOver();
         }
         else
         {
-            // Fallback safety checking for the legacy controller component
+
             GameOverController gameOver = Object.FindFirstObjectByType<GameOverController>();
             if (gameOver != null)
             {

@@ -42,7 +42,6 @@ public class PlayerInventory : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // 1. FLOWER HARVESTING
         if (collision.CompareTag("Flower"))
         {
             flowerCount += 1;
@@ -53,7 +52,6 @@ public class PlayerInventory : MonoBehaviour
 
         WallManager wallManager = Object.FindFirstObjectByType<WallManager>();
 
-        // BOOTH 1: Wall Upgrade / Repair Zone
         if (collision.CompareTag("WallUpgradeZone"))
         {
             if (wallManager != null)
@@ -77,7 +75,6 @@ public class PlayerInventory : MonoBehaviour
                     flowerCount -= 5;
                     UpdateUI();
 
-                    // FIXED: Play the wall upgrade sound effect instantly!
                     if (wallUpgradeSFX != null)
                     {
                         wallUpgradeSFX.Play();
@@ -115,7 +112,6 @@ public class PlayerInventory : MonoBehaviour
             }
         }
 
-        // BOOTH 2: Flower To Meat Zone
         if (collision.CompareTag("FlowerToMeatZone"))
         {
             if (flowerCount >= 8)
@@ -124,7 +120,6 @@ public class PlayerInventory : MonoBehaviour
                 meatCount += 1;
                 UpdateUI();
 
-                // FIXED: Play the meat purchase sound effect instantly!
                 if (buyMeatSFX != null)
                 {
                     buyMeatSFX.Play();
@@ -144,7 +139,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
 
-        // BOOTH 3: Meat To Helpers Zone
+
         if (collision.CompareTag("MeatToHelpersZone"))
         {
             if (meatCount >= 4)
@@ -153,7 +148,6 @@ public class PlayerInventory : MonoBehaviour
                 warriorCount += 1;
                 UpdateUI();
 
-                // FIXED: Play the warrior hiring sound effect instantly!
                 if (hireWarriorSFX != null)
                 {
                     hireWarriorSFX.Play();

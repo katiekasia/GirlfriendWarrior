@@ -41,7 +41,6 @@ public class GameDirector : MonoBehaviour
         if (monsterSpawner != null)
             monsterSpawner.SetActive(false);
 
-        // FIXED: Instantly start playing the peaceful prep phase music on match startup!
         if (prepMusicSource != null)
         {
             prepMusicSource.Play();
@@ -52,7 +51,7 @@ public class GameDirector : MonoBehaviour
 
     IEnumerator MasterMatchSequence()
     {
-        // 1. COUNTDOWN PREPARATION PHASE
+
         if (statusTextUI != null) statusTextUI.text = "Gather Flowers & Secure Wall!";
         StartCoroutine(ClearInitialStatusAfterDelay(5f));
 
@@ -67,23 +66,19 @@ public class GameDirector : MonoBehaviour
 
         if (isMatchOver) yield break;
 
-        // FIXED: The clock hit zero! Cut off the peaceful prep music cleanly right now.
         if (prepMusicSource != null)
         {
             prepMusicSource.Stop();
         }
 
-        // 2. INITIATE SIEGE PHASE
         areWavesRunning = true;
 
         if (activeStatusOverrideCoroutine != null) StopCoroutine(activeStatusOverrideCoroutine);
         if (timerTextUI != null) timerTextUI.text = "00:00";
         Debug.Log("Clock hit zero! Octopuses are attacking, but trading remains OPEN!");
 
-        // 3. SINGLE ENEMY ATTACK WAVE SEQUENCE
         yield return StartCoroutine(ExecuteCombatWave(1));
 
-        // 4. MATCH VICTORY
         if (!isMatchOver)
         {
             TriggerVictory();
@@ -130,7 +125,6 @@ public class GameDirector : MonoBehaviour
         if (statusTextUI != null) statusTextUI.text = "MONSTERS INCOMING!";
         if (monsterSpawner != null) monsterSpawner.SetActive(true);
 
-        // Start playing the monster wave background music clip
         if (waveMusicSource != null)
         {
             waveMusicSource.Play();
@@ -188,8 +182,6 @@ public class GameDirector : MonoBehaviour
 
         if (statusTextUI != null) statusTextUI.text = "THE FORTRESS HAS FALLEN! GAME OVER";
         if (monsterSpawner != null) monsterSpawner.SetActive(false);
-
-        // Safety Catch: Stop BOTH tracks if a game over hits unexpectedly
         if (prepMusicSource != null) prepMusicSource.Stop();
         if (waveMusicSource != null) waveMusicSource.Stop();
 
@@ -213,7 +205,7 @@ public class GameDirector : MonoBehaviour
 
         if (statusTextUI != null) statusTextUI.text = "FORTRESS SURVIVED! VICTORY!";
 
-        // Safety Catch: Stop BOTH tracks on victory state updates
+
         if (prepMusicSource != null) prepMusicSource.Stop();
         if (waveMusicSource != null) waveMusicSource.Stop();
 
