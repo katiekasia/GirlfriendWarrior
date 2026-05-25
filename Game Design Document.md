@@ -90,3 +90,35 @@ To make the game run smoothly on arcade hardware, characters do not push each ot
 
 * **Victory (How to Win):** You win the game when the enemy spawner is empty, the wall isn’t destroyed AND every single octopus monster on the screen has been destroyed by your warriors. Winning triggers a full-screen panel with a big green victory card.  
 * **Defeat (How to Lose):** You lose instantly if the wall's health drops to zero, because the monsters break through and kidnap your boyfriend. This happens if you leave the wall unbuilt at Level 0, or if you do not hire enough warriors to stop the monsters from hitting the wall. Defeat freezes the game and shows a big red defeat card.
+
+
+# 🎯 Project Milestones - Girlfriend Warrior
+
+Here are the three development milestones that will be documented in the upcoming project blog posts. These milestones break the work down into clear, manageable steps, moving from basic layout to final combat mechanics.
+
+---
+
+### 📍 Milestone 1: Map Layout, Character Movement, & Camera Setup
+*This milestone focuses on setting up the basic world and getting the main character moving cleanly around the screen.*
+
+* **Creating the Map Zones:** Design and paint the 2D tiles for the multiple connected areas, ensuring the lower garden zone and the upper shop zone link together correctly.
+* **Keyboard & Joystick Input:** Program the player character to move smoothly in 8 directions using either a PC keyboard or an arcade joystick without ever needing a mouse menu.
+* **Camera Boundaries:** Set up the 2D camera system to follow the player tightly but snap cleanly to the active room boundaries so the empty background void stays hidden.
+
+---
+
+### 📍 Milestone 2: Trading Booths & Game Phase Timer
+*This milestone focuses on wiring up the resource collection system, the automatic trading options, and the countdown clock.*
+
+* **Flower Collection:** Program resource flowers to spawn naturally on the grass and trigger a light rustling sound effect when walked over.
+* **Walk-In Trading Booths:** Build the three physical trigger zones on the map (Wall Upgrades, Meat Exchange, and Warrior Recruitment) so trades happen automatically when stepping inside.
+* **The Phase Timer:** Create the master countdown clock that ticks down from 04:00 to 00:00, switching the game and the background music automatically from preparation mode to fight mode.
+
+---
+
+### 📍 Milestone 3: Monster Wave, Defender AI, & End Screens
+*This final milestone adds the actual sea-monster threats, automated defender combat logic, and match results screens.*
+
+* **Octopus Siege AI:** Program the octopus enemies to spawn, ignore friendly units, march straight down to a random spot on the wall, and deal damage to your health hearts.
+* **Invincible Warrior AI:** Program hired defenders to scan for nearby monsters, run toward them automatically, stand their ground, and strike every 1.2 seconds while staying safe from damage.
+* **Win/Loss System:** Connect the wall's health and enemy count to full-screen green Victory and red Defeat cards that freeze gameplay and let players navigate options with a joystick or keyboard.
