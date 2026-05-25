@@ -92,13 +92,13 @@ To make the game run smoothly on arcade hardware, characters do not push each ot
 * **Defeat (How to Lose):** You lose instantly if the wall's health drops to zero, because the monsters break through and kidnap your boyfriend. This happens if you leave the wall unbuilt at Level 0, or if you do not hire enough warriors to stop the monsters from hitting the wall. Defeat freezes the game and shows a big red defeat card.
 
 
-# 🎯 Project Milestones - Girlfriend Warrior
+# Project Milestones - Girlfriend Warrior
 
 Here are the three development milestones that will be documented in the upcoming project blog posts. These milestones break the work down into clear, manageable steps, moving from basic layout to final combat mechanics.
 
 ---
 
-### 📍 Milestone 1: Map Layout & Camera
+### Milestone 1: Map Layout & Camera
 *This milestone focuses on setting up the basic world and getting the main character moving cleanly around the screen.*
 
 * **Creating the Map Zones:** Design and paint the 2D tiles for the multiple connected areas, making sure the lower garden zone and the upper shop zone link together correctly.
@@ -107,7 +107,7 @@ Here are the three development milestones that will be documented in the upcomin
 
 ---
 
-### 📍 Milestone 2: Trading Booths & Game Time
+### Milestone 2: Trading Booths & Game Time
 *This milestone focuses on creating the resource collection system, the automatic trading options, and the countdown clock.*
 
 * **Flower Collection:** Program resource flowers to spawn naturally on the grass and trigger a light rustling sound effect.
@@ -116,7 +116,7 @@ Here are the three development milestones that will be documented in the upcomin
 
 ---
 
-### 📍 Milestone 3: Monster Wave, Defender AI, & End Screens
+### Milestone 3: Monster Wave, Defender AI, & End Screens
 *This final milestone adds the actual sea-monster threats, automated defender combat logic, and match results screens.*
 
 * **Octopus Monster AI:** Program the octopus enemies to spawn, ignore friendly units, march straight down to a random spot on the wall, and deal damage to your health hearts.
