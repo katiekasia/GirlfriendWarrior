@@ -1,22 +1,27 @@
-Girlfriend Warrior
+# Girlfriend Warrior - Game Design Document
 
-Target Platform: VIA Arcade Cabinet (Joystick \+ Face Buttons) & PC Computer (Keyboard Only)
+**Target Platform:** VIA Arcade Cabinet (Joystick + Face Buttons) & PC Computer (Keyboard Only)  
 
-1\. Summary & Story
+---
+
+### 1. Summary & Story
 
 * **Core Concept:** *Girlfriend Warrior* is a fast-paced, top-down 2D arcade game. It combines time-management and base-defense rules to make a high-tension match where you try to survive a single wave of enemies.   
 * **Target Audience:** Casual arcade players and students who want a quick, exciting game to play on a real arcade machine.  
-* **Project Scope:** Made specifically for an arcade cabinet. There are no save files, no setting menus, and no mouse menus. Everything is kept simple so players can start playing immediately.
+* **Project Scope:** Made specifically for an arcade cabinet but fully playable on a computer using only a keyboard with zero mouse input required. There are no save files, no setting menus, and no mouse menus. Everything is kept simple so players can start playing immediately.
 
-<img width="297" height="52" alt="image" src="https://github.com/user-attachments/assets/8e1ba0ec-6015-44c6-bcce-4428fb3c9715" />
-** Playable character \- Girlfriend Warrior**
+<p align="center">
+  <img width="297" height="52" alt="image" src="https://github.com/user-attachments/assets/8e1ba0ec-6015-44c6-bcce-4428fb3c9715" /><br>
+  Figure 1: Playable character - Girlfriend Warrior
+</p>
 
-
-* **The Story:** The story is silly and fun. The Octopus King thinks your boyfriend is super cute and wants him for himself\! He has sent his whole sea-monster army to kidnap him.  
+* **The Story:** The story is silly and fun. The Octopus King thinks your boyfriend is super cute and wants him for himself! He has sent his whole sea-monster army to kidnap him.  
 * **The Mission:** Your boyfriend is hiding behind an unbuilt fortress wall. Playing as the brave Girlfriend, you must quickly collect resources, build up a safe wall, and hire automated warriors to help protect him before time runs out.  
 * **Level Design:** The game features multiple connected map sections, including a central garden field at the bottom and an upper shop layout. The player can walk through gates to cross between these different map zones during gameplay.
 
-2\. Match Structure & Gameplay Flow
+---
+
+### 2. Match Structure & Gameplay Flow
 
 The game has a countdown timer that splits the match into two back-to-back phases:
 
@@ -33,40 +38,55 @@ The game has a countdown timer that splits the match into two back-to-back phase
 * **The Wave:** An enemy spawner turns on and releases a massive wave of octopus monsters in the direction of the garden.  
 * **Active Trading:** The booths stay open during the attack, so you can still travel through the gates and spend your leftover resources while fighting.
 
-3\. Trading Options   
+---
+
+### 3. Trading Options 
+
 Trading is built directly into the map layout. There are no shopping menus or inventory screens. Instead, players just walk their character straight into the trading zones, and the trade happens automatically. This makes trading very easy with an arcade joystick or keyboard arrow keys. 
 
 | Resource / Booth | Cost / Transaction | Action & Feedback |
-| ----- | ----- | ----- |
-| Flowers | Gathered from the ground | Walk over them to pick them up. This is your main currency. Picking them up plays a light grass-rustling sound. |
-| Meat | Bought with Flowers | Secondary currency. Used exclusively to recruit defenders. |
-| Booth 1: Wall Upgrade/Repair | 5 Flowers | Healthy Wall: Upgrades appearance across 5 visual tiers and expands max health. Damaged Wall: Acts as a repair tool, instantly fully healing missing hearts |
-| Booth 2: Meat Exchange | 8 Flowers \- Meat | Standard currency trade. Plays a short transaction sound effect. |
-| Booth 3: Warrior Recruitment | 4 Meat \- Warrior | Instantly summons an automated defender at a fixed spawn point. |
+| :--- | :--- | :--- |
+| **Flowers** | Gathered from the ground | Walk over them to pick them up. This is your main currency. Picking them up plays a light grass-rustling sound. |
+| **Meat** | Bought with Flowers | Secondary currency. Used exclusively to recruit defenders. |
+| **Booth 1: Wall Upgrade/Repair** | 5 Flowers | **Healthy Wall:** Upgrades appearance across 5 visual tiers and expands max health. <br>**Damaged Wall:** Acts as a repair tool, instantly fully healing missing hearts. |
+| **Booth 2: Meat Exchange** | 8 Flowers - Meat | Standard currency trade. Plays a short transaction sound effect. |
+| **Booth 3: Warrior Recruitment** | 4 Meat - Warrior | Instantly summons an automated defender at a fixed spawn point. |
 
-## 
+---
 
-## 4\. Character AI & Combat Rules
+### 4. Character AI & Combat Rules
 
 To make the game run smoothly on arcade hardware, characters do not push each other using physics. Instead, friendly defenders and enemies fight based on simple distance math.
 
 * **Friendly Hired Defenders:** The warriors you hire are completely invincible. They do not have health bars and cannot die. They act like moving defense towers. They scan the area for objects labeled "Monster," run toward the closest one, stop exactly when they get close, and attack every 1.2 seconds. When there are no enemies, they walk around in a small circle to keep the map looking active.
 
-<img width="101" height="86" alt="image" src="https://github.com/user-attachments/assets/b7cc3e3a-7a59-406c-beca-b6475f3be345" />
-  *Figure 2: Friendly Hired Defender*  
+<p align="center">
+  <img width="101" height="86" alt="image" src="https://github.com/user-attachments/assets/b7cc3e3a-7a59-406c-beca-b6475f3be345" /><br>
+  <i>Figure 2: Friendly Hired Defender</i>
+</p>
+
 * **Octopus Monsters:** The octopus enemies only care about destroying the wall. They completely ignore your friendly warriors and cannot be distracted. When they spawn, they pick a random spot along the wall and march straight down toward it. Once they touch the wall, they stop, play an attack animation, and deal damage directly to your health hearts. They have a floating health bar above their heads that gets shorter as they take damage.
 
-<img width="116" height="99" alt="image" src="https://github.com/user-attachments/assets/5a589e75-6ab3-49b4-b111-e5881adb8a39" />
-*Figure 3: Octopus Monster*
+<p align="center">
+  <img width="116" height="99" alt="image" src="https://github.com/user-attachments/assets/5a589e75-6ab3-49b4-b111-e5881adb8a39" /><br>
+  <i>Figure 3: Octopus Monster</i>
+</p>
 
-5\. Fortress Wall Health
+---
 
-**The Heart HUD:** Your base health is tracked on the left side of the screen using up to 5 heart symbols. Each heart holds 8 health points (up to 40 HP total capacity). Hearts visually break away one by one as monsters attack the wall.
+### 5. Fortress Wall Health
 
-<img width="381" height="51" alt="image" src="https://github.com/user-attachments/assets/a33c8807-6063-4c20-81a3-a0320e285d93" />
-*Figure 4: Wall Health that updates due to an upgrade or an attack of octopuses*
+* **The Heart HUD:** Your base health is tracked on the left side of the screen using up to 5 heart symbols. Each heart holds 8 health points (up to 40 HP total capacity). Hearts visually break away one by one as monsters attack the wall.
 
-6\. Win & Loss Conditions
+<p align="center">
+  <img width="381" height="51" alt="image" src="https://github.com/user-attachments/assets/a33c8807-6063-4c20-81a3-a0320e285d93" /><br>
+  <i>Figure 4: Wall Health that updates due to an upgrade or an attack of octopuses</i>
+</p>
+
+
+---
+
+### 6. Win & Loss Conditions
 
 * **Victory (How to Win):** You win the game when the enemy spawner is empty, the wall isn’t destroyed AND every single octopus monster on the screen has been destroyed by your warriors. Winning triggers a full-screen panel with a big green victory card.  
 * **Defeat (How to Lose):** You lose instantly if the wall's health drops to zero, because the monsters break through and kidnap your boyfriend. This happens if you leave the wall unbuilt at Level 0, or if you do not hire enough warriors to stop the monsters from hitting the wall. Defeat freezes the game and shows a big red defeat card.
